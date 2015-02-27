@@ -3,11 +3,37 @@
 
 """
 DESCRIPTION
+This software can be used to find cluster in biological structures (PDB and
+Dynamics trajectories like Gromacs and Amber). 
 
+SYNTAXE : 
+/!\ NEVER USE SPACES
+The Basic Syntaxe is => CHAIN:RES_NUM:ATOMS_NAME
+chain, amino acids and atoms are separed with ":"
+You can select an amino acid interval with RES_NUM-RES_NUM 
+    => 1-30
+You can select several atoms type with "-" to (it's apply on the selected AAs)
+    => CA-CB
+If you wan to select all elements of a group : use "." or nothing.
+    => A:.:. (means all atoms of all residues of the chain A)
+    => A:: is the same as A:.:.
+You can have several selection if you put a "," between them
+    => A:.:.,B:1-30:CA (the Entire chain A and only the carbon alpha of the firth
+        30 aa of the chain B)
+exemples : 
+:20-30:CA-CB => Alpha and beta carbon of the amino acids 20 to 30 of all chains
+A:1-100:.,B:200-300:CA => alpha carbons of aa 200 to 300 of the chain B AND all
+                          atoms of aa 1 to 100 of the chain A.
+    
 ARGUMENTS : 
-
+    -f : a list of pdb (like "/structure/*.pdb") 
+    -l : list of pdb code! /!\ IF YOU USED THAT : -f as to be the PATH of your pdb files
+    -s : Selection string
+    -a : Alignement type (g = Global, l = Local (on selection string))
+    -o : output name for the log file (default is cluster.log)
+    
 USAGE : 
-
+python Cluster_Analysis.py -f *.pdb -s [SELECTION] -a Alignement_type -o output_log
 """
 
 __author__ = "Thibault TUBIANA"
@@ -263,9 +289,13 @@ def wrote_logfile(outpath, cl, PDB_name_list):
 
 if __name__ == "__main__":
     print "********************************************************"
-    print "**********  3D STRUCTURES CLUSTERING 0.7  **************"
+    print "**********  3D STRUCTURES CLUSTERING 0.9  **************"
     print "********************************************************"
     print ""
+    print "Please note :"
+    print "  *Gromacs trajectories reader has not been implemented yet"
+    print "  *Amber trajectories reader has not been implemented yet"
+    print "Run the software with : python Cluster_Analysis.py -f *.pdb -s [SELECTION]\n\n"
     #We get all arguments
     myArgs=parseArg()
     
